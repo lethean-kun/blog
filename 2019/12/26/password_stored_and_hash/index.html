@@ -423,9 +423,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Hash-password/">
+                                <span class="chip bg-color">Hash,password</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -464,8 +468,13 @@
 <li>冲突避免：很难找到两段内容不同的明文，使得它们的 hash 值一致（发生冲突）。即对于任意两个不同的数据块，其hash值相同的可能性极小；对于一个给定的数据块，找到和它hash值相同的数据块极为困难。</li>
 </ul>
 <h2 id="Hash算法是如何实现的"><a href="#Hash算法是如何实现的" class="headerlink" title="Hash算法是如何实现的"></a>Hash算法是如何实现的</h2><p>写一个最简单的Hash算法  对任意数 取模运算    这个也很简单的实现了 用较少的文本量代表很长的内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    System.out.println(hash(5));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Integer hash(Integer s) &#123;</span><br><span class="line">    return s % 4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当然这个很容易就可以发现规律，实际算法中可能会有异或 移位 加更多的循环 等 ，来加强散列函数的可靠性</p>
+<pre><code>    public static void main(String[] args) {
+        System.out.println(hash(5));
+    }
+
+    public static Integer hash(Integer s) {
+        return s % 4;
+    }</code></pre><p>当然这个很容易就可以发现规律，实际算法中可能会有异或 移位 加更多的循环 等 ，来加强散列函数的可靠性</p>
 <h2 id="Hash在在密码学中的应用"><a href="#Hash在在密码学中的应用" class="headerlink" title="Hash在在密码学中的应用"></a>Hash在在密码学中的应用</h2><p>当我们登录某个系统时，输入的密码在数据库一般不可能明文存储的，普遍是使用hash算法生成一个密码的签名，只保存这个签名值，由于hash算法是不可逆的，那么黑客即便得到这个签名，也丝毫没有用处，下次登录时，后台会重新计算Hash，与网站中储存的原hash值进行比对，如果相同，证明你拥有这个账户的密码，那么就会允许你登陆，当然现有的系统 或者说其他安全的领域，都会在密码上加一些salt(随机生成的Byte数组，然后Base64 encode存入库的)，即使密码hash被暴露了，也可以有效的防治字典攻击。</p>
 <p>在这些应用场景里，对于抗碰撞和抗篡改能力要求极高，对速度的要求在其次。一个设计良好的hash算法，其抗碰撞能力是很高的。以MD5为例，其输出长度为128位，设计预期碰撞概率为2^128，这是一个极小极小的数字，也就是说，至少需要找2^128次才能有1次的概率来找到一个与目标文件相同的hash值。</p>
 <h2 id="Hash有哪些流行的算法"><a href="#Hash有哪些流行的算法" class="headerlink" title="Hash有哪些流行的算法"></a>Hash有哪些流行的算法</h2><blockquote>
@@ -540,7 +549,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Hash-password/">
+                                    <span class="chip bg-color">Hash,password</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -737,6 +750,14 @@
                 </div>
 
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hash-password/">
+                        <span class="chip bg-color">Hash,password</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
@@ -773,6 +794,14 @@
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hash-password/">
+                        <span class="chip bg-color">Hash,password</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
