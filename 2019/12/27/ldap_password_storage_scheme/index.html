@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hash算法与密码存储, 泽坤的博客">
-    <meta name="description" content="理解Hash算法 以及再密码学中的应用">
+    <meta name="keywords" content="浅谈 LDAP password storage scheme, 泽坤的博客">
+    <meta name="description" content="简略介绍一下LDAP密码存储以及加密方式">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -13,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Hash算法与密码存储 | 泽坤的博客</title>
+    <title>浅谈 LDAP password storage scheme | 泽坤的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -303,12 +303,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3478331907,3562607100&fm=26&gp=0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/ldap_password.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hash算法与密码存储</h1>
+                    <h1 class="description center-align post-title">浅谈 LDAP password storage scheme</h1>
                 </div>
             </div>
         </div>
@@ -425,12 +425,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Hash/">
-                                <span class="chip bg-color">Hash</span>
-                            </a>
-                        
                             <a href="/tags/password/">
                                 <span class="chip bg-color">password</span>
+                            </a>
+                        
+                            <a href="/tags/LDAP/">
+                                <span class="chip bg-color">LDAP</span>
                             </a>
                         
                     </div>
@@ -445,7 +445,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-26
+                    2019-12-27
                 </div>
                 
 
@@ -462,36 +462,30 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="什么是Hash-算法"><a href="#什么是Hash-算法" class="headerlink" title="什么是Hash 算法"></a>什么是Hash 算法</h2><blockquote>
-<p><strong>散列算法（Hash Algorithm）</strong>，又称哈希算法，杂凑算法，是把任意长度的输入，通过散列算法变换成固定长度的输出，该输出就是散列值。这种转换是一种压缩映射。<br>一个优秀的 hash 算法，将能实现：</p>
+                <h2 id="LDAP-密码存储格式"><a href="#LDAP-密码存储格式" class="headerlink" title="LDAP 密码存储格式"></a>LDAP 密码存储格式</h2><p><img src="/images/ldap_password.png" alt=""></p>
+<blockquote>
+<p>如图为一个密码为password的密码，在LDAP中的存储 Password Preview。</p>
 </blockquote>
-<ul>
-<li>正向快速：给定明文和 hash 算法，在有限时间和有限资源内能计算出 hash 值。</li>
-<li>逆向困难：给定（若干） hash 值，在有限时间内很难（基本不可能）逆推出明文。</li>
-<li>输入敏感：原始输入信息修改一点信息，产生的 hash 值看起来应该都有很大不同。</li>
-<li>冲突避免：很难找到两段内容不同的明文，使得它们的 hash 值一致（发生冲突）。即对于任意两个不同的数据块，其hash值相同的可能性极小；对于一个给定的数据块，找到和它hash值相同的数据块极为困难。</li>
+<h2 id="LDAP-密码加密过程"><a href="#LDAP-密码加密过程" class="headerlink" title="LDAP 密码加密过程"></a>LDAP 密码加密过程</h2><blockquote>
+<p>图中所示的加密方式为 SSHA-256加密方式 （即SHA-256 带Salt方式）</p>
+</blockquote>
+<h3 id="加密过程解读"><a href="#加密过程解读" class="headerlink" title="加密过程解读"></a>加密过程解读</h3><ul>
+<li><a href="https://www.browserling.com/tools/text-to-hex" target="_blank" rel="noopener">password -&gt; Hex</a> 得到 <pre><code>70 61 73 73 77 6f 72 64</code></pre></li>
+<li>password Hex(70 61 73 73 77 6f 72 64) + Salt Hex(a3 17 fc 05 16 f8 2c 4d) <pre><code>70 61 73 73 77 6f 72 64 a3 17 fc 05 16 f8 2c 4d</code></pre></li>
+<li><a href="https://www.fileformat.info/tool/hash.htm?hex=70617373776f7264a317fc0516f82c4d" target="_blank" rel="noopener">Binary hash</a></li>
 </ul>
-<h2 id="Hash算法是如何实现的"><a href="#Hash算法是如何实现的" class="headerlink" title="Hash算法是如何实现的"></a>Hash算法是如何实现的</h2><p>写一个最简单的Hash算法  对任意数 取模运算    这个也很简单的实现了 用较少的文本量代表很长的内容</p>
-<pre><code>    public static void main(String[] args) {
-        System.out.println(hash(5));
-    }
-
-    public static Integer hash(Integer s) {
-        return s % 4;
-    }</code></pre><p>当然这个很容易就可以发现规律，实际算法中可能会有异或 移位 加更多的循环 等 ，来加强散列函数的可靠性</p>
-<h2 id="Hash在在密码学中的应用"><a href="#Hash在在密码学中的应用" class="headerlink" title="Hash在在密码学中的应用"></a>Hash在在密码学中的应用</h2><p>当我们登录某个系统时，输入的密码在数据库一般不可能明文存储的，普遍是使用hash算法生成一个密码的签名，只保存这个签名值，由于hash算法是不可逆的，那么黑客即便得到这个签名，也丝毫没有用处，下次登录时，后台会重新计算Hash，与网站中储存的原hash值进行比对，如果相同，证明你拥有这个账户的密码，那么就会允许你登陆，当然现有的系统 或者说其他安全的领域，都会在密码上加一些salt(随机生成的Byte数组，然后Base64 encode存入库的)，即使密码hash被暴露了，也可以有效的防治字典攻击。</p>
-<p>在这些应用场景里，对于抗碰撞和抗篡改能力要求极高，对速度的要求在其次。一个设计良好的hash算法，其抗碰撞能力是很高的。以MD5为例，其输出长度为128位，设计预期碰撞概率为2^128，这是一个极小极小的数字，也就是说，至少需要找2^128次才能有1次的概率来找到一个与目标文件相同的hash值。</p>
-<h2 id="Hash有哪些流行的算法"><a href="#Hash有哪些流行的算法" class="headerlink" title="Hash有哪些流行的算法"></a>Hash有哪些流行的算法</h2><blockquote>
-<p><strong>SHA （Secure Hash Algorithm）</strong>是一个 Hash 函数族，由 NIST（National Institute of Standards and Technology）于 1993 年发布第一个算法。</p>
-</blockquote>
-<p>为了提高安全性，NIST 还设计出了 SHA-224、SHA-256、SHA-384，和 SHA-512 算法，跟 SHA-1 算法原理类似。SHA-3 算法是yufu现在在用的算法。</p>
-<p>所说的上面这几种流行的算法，它们最重要的一点区别就是 <strong>“强抗碰撞性”</strong>。</p>
-<blockquote>
-<blockquote>
-<p>什么是强抗碰撞性呢？像刚刚我们举的Hash算法实现的例子，任何数对4取模  那么得到的结果只会有4种，也就是说随便拿5个数 去算  就至少会得到两个相同的值，这种情况就叫做散列算法的碰撞。</p>
-</blockquote>
-</blockquote>
-
+<p><img src="/images/sha-256_result.png" alt=""></p>
+<ul>
+<li>如图 得到 SHA-256 哈希结果为</li>
+</ul>
+<pre><code>f818a581e113b53d96a8308ae43e572329dc09b8f883afbdc60d3aaebdc0def7</code></pre><ul>
+<li>密码哈希值 + Salt Hex —<a href="https://base64.guru/converter/encode/hex" target="_blank" rel="noopener">Base64</a>—&gt;</li>
+</ul>
+<pre><code>+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==</code></pre><ul>
+<li>最终Ldap的密码存储方式为 {CRYPT}Base64(Password Hex + Salt Hex)</li>
+</ul>
+<pre><code>{SSHA256}+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==
+</code></pre>
             </div>
             <hr/>
 
@@ -516,7 +510,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://zkun.top/2019/12/26/password_stored_and_hash/">http://zkun.top/2019/12/26/password_stored_and_hash/</a>
+                    <a href="http://zkun.top/2019/12/27/ldap_password_storage_scheme/">http://zkun.top/2019/12/27/ldap_password_storage_scheme/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -554,12 +548,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Hash/">
-                                    <span class="chip bg-color">Hash</span>
-                                </a>
-                            
                                 <a href="/tags/password/">
                                     <span class="chip bg-color">password</span>
+                                </a>
+                            
+                                <a href="/tags/LDAP/">
+                                    <span class="chip bg-color">LDAP</span>
                                 </a>
                             
                         </div>
@@ -725,9 +719,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/12/27/ldap_password_storage_scheme/">
                     <div class="card-image">
@@ -744,9 +739,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -755,6 +750,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -774,7 +770,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2019/12/26/password_stored_and_hash/">
@@ -803,7 +799,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
