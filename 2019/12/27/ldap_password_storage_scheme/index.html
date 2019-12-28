@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="password,LDAP," />
+  <meta name="keywords" content="LDAP,password," />
 
 
 
@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。  LDAP 密码加密过程 图中所示的加密方式为 SSHA-256加密方式 （即SHA-256 带Salt方式）  加密过程解读 password -&gt; Hex 得到 70 61 73 73 77 6f 72 64 password Hex(70 61 73 73 77 6">
+<meta name="description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈 LDAP password storage scheme">
 <meta property="og:url" content="http://zkun.top/2019/12/27/ldap_password_storage_scheme/index.html">
 <meta property="og:site_name" content="zk&#39;Blog">
-<meta property="og:description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。  LDAP 密码加密过程 图中所示的加密方式为 SSHA-256加密方式 （即SHA-256 带Salt方式）  加密过程解读 password -&gt; Hex 得到 70 61 73 73 77 6f 72 64 password Hex(70 61 73 73 77 6">
+<meta property="og:description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。">
 <meta property="og:image" content="http://zkun.top/images/ldap_password.png">
 <meta property="og:image" content="http://zkun.top/images/sha-256_result.png">
 <meta property="article:published_time" content="2019-12-27T06:50:08.000Z">
-<meta property="article:modified_time" content="2019-12-27T07:42:02.092Z">
+<meta property="article:modified_time" content="2019-12-28T06:05:12.956Z">
 <meta property="article:author" content="zekun">
-<meta property="article:tag" content="password">
 <meta property="article:tag" content="LDAP">
+<meta property="article:tag" content="password">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://zkun.top/images/ldap_password.png">
 
@@ -164,7 +164,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">progress together</p>
+        <p class="site-subtitle">Rome was not built in a day</p>
       
   </div>
 
@@ -187,9 +187,39 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -197,7 +227,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -317,6 +347,9 @@
 <blockquote>
 <p>如图为一个密码为password的密码，在LDAP中的存储 Password Preview。</p>
 </blockquote>
+<a id="more"></a> 
+
+
 <h2 id="LDAP-密码加密过程"><a href="#LDAP-密码加密过程" class="headerlink" title="LDAP 密码加密过程"></a>LDAP 密码加密过程</h2><blockquote>
 <p>图中所示的加密方式为 SSHA-256加密方式 （即SHA-256 带Salt方式）</p>
 </blockquote>
@@ -353,9 +386,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/password/" rel="tag"># password</a>
-          
             <a href="/tags/LDAP/" rel="tag"># LDAP</a>
+          
+            <a href="/tags/password/" rel="tag"># password</a>
           
         </div>
       
@@ -450,7 +483,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">zekun</p>
-              <p class="site-description motion-element" itemprop="description">积少成多，记录学习中的心得</p>
+              <p class="site-description motion-element" itemprop="description">冰冻三尺，非一日之寒</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -458,7 +491,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives">
+                <a href="/archives%7C%7C%20archive">
               
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
@@ -483,6 +516,22 @@
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/lethean-kun" target="_blank" title="My_GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>My_GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1434745143@qq.com" target="_blank" title="My_E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>My_E-Mail</a>
+                  </span>
+                
+            </div>
           
 
           
