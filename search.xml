@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>OIDC、SAML主流SSO协议介绍</title>
+    <url>/2019/12/29/OIDC_SAML/</url>
+    <content><![CDATA[<h2 id="SAML-（Security-Assertion-Markup-Language）"><a href="#SAML-（Security-Assertion-Markup-Language）" class="headerlink" title="SAML （Security Assertion Markup Language）"></a>SAML （Security Assertion Markup Language）</h2><blockquote>
+<p>一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议<br>自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准</p>
+</blockquote>
+<a id="more"></a> 
+
+<h3 id="SAML协议的简单流程"><a href="#SAML协议的简单流程" class="headerlink" title="SAML协议的简单流程"></a>SAML协议的简单流程</h3><blockquote>
+<p>SAML中主要定义了三个角色 <strong>identity provider</strong>(简称 <strong>IDP</strong>)、<strong>service provider(简称 **SP</strong>)<strong>、</strong>principal**(可以认为是使用者)</p>
+</blockquote>
+<p><img src="/images/SAML.png" alt=""></p>
+<blockquote>
+<blockquote>
+<p>上图既是SAML协议的完整认证流程</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>a.用户请求SP，如访问jira。</li>
+<li>b.SP接收到请求之后，携带SAMLRequest重定向到IDP处（SAMLRequest的格式后面会给出）。</li>
+<li>c.IDP接收到SAMLRequest后，会在IDP验证用户身份，检查当前用户是否登录，如果未登录跳转登录页面。</li>
+<li>d.IDP验证身份通过后，会返回SAMLResource（SAMLResponse的格式后面会给出）。</li>
+<li>e.SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。</li>
+</ul>
+<h3 id="SAML-数据格式"><a href="#SAML-数据格式" class="headerlink" title="SAML 数据格式"></a>SAML 数据格式</h3><h4 id="SAMLRequest"><a href="#SAMLRequest" class="headerlink" title="SAMLRequest"></a>SAMLRequest</h4><pre><code>&lt;samlp:AuthnRequest
+    xmlns:samlp=&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;
+    xmlns:saml=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;
+    ID=&quot;_5eee6e65-e4e6-43cf-9ed3-6e7abdff262d&quot;
+    Version=&quot;2.0&quot;
+    IssueInstant=&quot;2020-01-01T00:00:00&quot;
+    AssertionConsumerServiceIndex=&quot;0&quot;
+    AttributeConsumingServiceIndex=&quot;0&quot;&gt;
+    &lt;saml:Issuer&gt;https://www.***.com&lt;/saml:Issuer&gt;
+    &lt;samlp:NameIDPolicy
+      AllowCreate=&quot;true&quot;
+      Format=&quot;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&quot;/&gt;
+  &lt;/samlp:AuthnRequest&gt;
+</code></pre><h4 id="SAMLResponse-（SAML2-0）"><a href="#SAMLResponse-（SAML2-0）" class="headerlink" title="SAMLResponse （SAML2.0）"></a>SAMLResponse （SAML2.0）</h4><pre><code>
+&lt;samlp:Response
+    xmlns:samlp=&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;
+    xmlns:saml=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;
+    ID=&quot;_592c022f-e85e-4d23-b55b-9141c95cd2a5&quot;
+    InResponseTo=&quot;_049917a6-1183-42fd-a190-1d2cbaf9b144&quot;
+    Version=&quot;2.0&quot;
+    IssueInstant=&quot;2020-01-01T00:00:00Z&quot;
+    Destination=&quot;https://sp.example.com/SAML2/SSO/POST&quot;&gt;
+    &lt;saml:Issuer&gt;https://www.***.com&lt;/saml:Issuer&gt;
+    &lt;samlp:Status&gt;
+      &lt;samlp:StatusCode
+        Value=&quot;urn:oasis:names:tc:SAML:2.0:status:Success&quot;/&gt;
+    &lt;/samlp:Status&gt;
+    &lt;saml:Assertion
+      xmlns:saml=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;
+      ID=&quot;_82b251d1-4796-46d3-b903-c85c9ae49172&quot;
+      Version=&quot;2.0&quot;
+      IssueInstant=&quot;2019-01-01T01:00:00Z&quot;&gt;
+      &lt;saml:Issuer&gt;https://www.***.com&lt;/saml:Issuer&gt;
+      &lt;!-- a POSTed assertion MUST be signed --&gt;
+      &lt;ds:Signature     xmlns:ds=&quot;http://www.w3.org/2000/09/xmldsig#&quot;&gt;...&lt;/ds:Signature&gt;
+      &lt;saml:Subject&gt;
+        &lt;saml:NameID
+          Format=&quot;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&quot;&gt;
+         YufuTestUser
+        &lt;/saml:NameID&gt;
+        &lt;saml:SubjectConfirmation
+          Method=&quot;urn:oasis:names:tc:SAML:2.0:cm:bearer&quot;&gt;
+          &lt;saml:SubjectConfirmationData
+            InResponseTo=&quot;_049917a6-1183-42fd-a190-1d2cbaf9b144&quot;
+            Recipient=&quot;https://sp.example.com/SAML2/SSO/POST&quot;
+            NotOnOrAfter=&quot;2019-01-01T01:00:00Z&quot;/&gt;
+        &lt;/saml:SubjectConfirmation&gt;
+      &lt;/saml:Subject&gt;
+      &lt;saml:Conditions
+        NotBefore=&quot;2019-01-01T00:55:00Z &quot;
+        NotOnOrAfter=&quot;2019-01-01T01:05:00Z &quot;&gt;
+        &lt;saml:AudienceRestriction&gt;
+        &lt;saml:Audience&gt;https://www.***.com&lt;/saml:Audience&gt;
+        &lt;/saml:AudienceRestriction&gt;
+      &lt;/saml:Conditions&gt;
+      &lt;saml:AuthnStatement
+        AuthnInstant=&quot;2020-01-01T00:00:00Z&quot;
+        SessionIndex=&quot;_82b251d1-4796-46d3-b903-c85c9ae49172&quot;&gt;
+        &lt;saml:AuthnContext&gt;
+          &lt;saml:AuthnContextClassRef&gt;        urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport
+         &lt;/saml:AuthnContextClassRef&gt;
+        &lt;/saml:AuthnContext&gt;
+      &lt;/saml:AuthnStatement&gt;
+    &lt;/saml:Assertion&gt;
+  &lt;/samlp:Response&gt;
+</code></pre><h2 id="OIDC-（OpenID-Connect）"><a href="#OIDC-（OpenID-Connect）" class="headerlink" title="OIDC （OpenID Connect）"></a>OIDC （OpenID Connect）</h2><blockquote>
+<p>一种基于OAuth2协议的身份认证标准协议</p>
+</blockquote>
+<blockquote>
+<p><strong>// TODO</strong></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>OIDC</tag>
+        <tag>SAML</tag>
+        <tag>SSO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>浅谈 LDAP password storage scheme</title>
     <url>/2019/12/27/ldap_password_storage_scheme/</url>
     <content><![CDATA[<h2 id="LDAP-密码存储格式"><a href="#LDAP-密码存储格式" class="headerlink" title="LDAP 密码存储格式"></a>LDAP 密码存储格式</h2><p><img src="/images/ldap_password.png" alt=""></p>

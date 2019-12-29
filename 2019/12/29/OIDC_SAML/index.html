@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="OIDC,SAML,SSO," />
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="冰冻三尺，非一日之寒">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://zkun.top/tags/index.html">
+<meta name="description" content="SAML （Security Assertion Markup Language） 一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OIDC、SAML主流SSO协议介绍">
+<meta property="og:url" content="http://zkun.top/2019/12/29/OIDC_SAML/index.html">
 <meta property="og:site_name" content="zk&#39;Blog">
-<meta property="og:description" content="冰冻三尺，非一日之寒">
-<meta property="article:published_time" content="2018-09-30T10:23:38.000Z">
-<meta property="article:modified_time" content="2019-12-28T05:14:01.920Z">
+<meta property="og:description" content="SAML （Security Assertion Markup Language） 一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准">
+<meta property="og:image" content="http://zkun.top/images/SAML.png">
+<meta property="article:published_time" content="2019-12-29T08:10:08.000Z">
+<meta property="article:modified_time" content="2019-12-29T10:46:19.253Z">
 <meta property="article:author" content="zekun">
+<meta property="article:tag" content="OIDC">
+<meta property="article:tag" content="SAML">
+<meta property="article:tag" content="SSO">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zkun.top/images/SAML.png">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://zkun.top/tags/"/>
+  <link rel="canonical" href="http://zkun.top/2019/12/29/OIDC_SAML/"/>
 
 
 
 
 
-  <title>标签 | zk'Blog</title>
+  <title>OIDC、SAML主流SSO协议介绍 | zk'Blog</title>
   
 
 
@@ -293,40 +298,278 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://zkun.top/2019/12/29/OIDC_SAML/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zekun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zk'Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">标签</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 6 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/Hash/" style="font-size: 12px; color: #ccc">Hash</a> <a href="/tags/LDAP/" style="font-size: 12px; color: #ccc">LDAP</a> <a href="/tags/OIDC/" style="font-size: 12px; color: #ccc">OIDC</a> <a href="/tags/SAML/" style="font-size: 12px; color: #ccc">SAML</a> <a href="/tags/SSO/" style="font-size: 12px; color: #ccc">SSO</a> <a href="/tags/password/" style="font-size: 30px; color: #111">password</a>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">OIDC、SAML主流SSO协议介绍</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-29T16:10:08+08:00">
+                2019-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/29/OIDC_SAML/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/12/29/OIDC_SAML/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="SAML-（Security-Assertion-Markup-Language）"><a href="#SAML-（Security-Assertion-Markup-Language）" class="headerlink" title="SAML （Security Assertion Markup Language）"></a>SAML （Security Assertion Markup Language）</h2><blockquote>
+<p>一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议<br>自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准</p>
+</blockquote>
+<a id="more"></a> 
+
+<h3 id="SAML协议的简单流程"><a href="#SAML协议的简单流程" class="headerlink" title="SAML协议的简单流程"></a>SAML协议的简单流程</h3><blockquote>
+<p>SAML中主要定义了三个角色 <strong>identity provider</strong>(简称 <strong>IDP</strong>)、<strong>service provider(简称 **SP</strong>)<strong>、</strong>principal**(可以认为是使用者)</p>
+</blockquote>
+<p><img src="/images/SAML.png" alt=""></p>
+<blockquote>
+<blockquote>
+<p>上图既是SAML协议的完整认证流程</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>a.用户请求SP，如访问jira。</li>
+<li>b.SP接收到请求之后，携带SAMLRequest重定向到IDP处（SAMLRequest的格式后面会给出）。</li>
+<li>c.IDP接收到SAMLRequest后，会在IDP验证用户身份，检查当前用户是否登录，如果未登录跳转登录页面。</li>
+<li>d.IDP验证身份通过后，会返回SAMLResource（SAMLResponse的格式后面会给出）。</li>
+<li>e.SP验证SAMLResponse，验证通过后取出SAMLResponse里携带的用户信息，访问对应的用户。</li>
+</ul>
+<h3 id="SAML-数据格式"><a href="#SAML-数据格式" class="headerlink" title="SAML 数据格式"></a>SAML 数据格式</h3><h4 id="SAMLRequest"><a href="#SAMLRequest" class="headerlink" title="SAMLRequest"></a>SAMLRequest</h4><pre><code>&lt;samlp:AuthnRequest
+    xmlns:samlp=&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;
+    xmlns:saml=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;
+    ID=&quot;_5eee6e65-e4e6-43cf-9ed3-6e7abdff262d&quot;
+    Version=&quot;2.0&quot;
+    IssueInstant=&quot;2020-01-01T00:00:00&quot;
+    AssertionConsumerServiceIndex=&quot;0&quot;
+    AttributeConsumingServiceIndex=&quot;0&quot;&gt;
+    &lt;saml:Issuer&gt;https://www.***.com&lt;/saml:Issuer&gt;
+    &lt;samlp:NameIDPolicy
+      AllowCreate=&quot;true&quot;
+      Format=&quot;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&quot;/&gt;
+  &lt;/samlp:AuthnRequest&gt;
+</code></pre><h4 id="SAMLResponse-（SAML2-0）"><a href="#SAMLResponse-（SAML2-0）" class="headerlink" title="SAMLResponse （SAML2.0）"></a>SAMLResponse （SAML2.0）</h4><pre><code>
+&lt;samlp:Response
+    xmlns:samlp=&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;
+    xmlns:saml=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;
+    ID=&quot;_592c022f-e85e-4d23-b55b-9141c95cd2a5&quot;
+    InResponseTo=&quot;_049917a6-1183-42fd-a190-1d2cbaf9b144&quot;
+    Version=&quot;2.0&quot;
+    IssueInstant=&quot;2020-01-01T00:00:00Z&quot;
+    Destination=&quot;https://sp.example.com/SAML2/SSO/POST&quot;&gt;
+    &lt;saml:Issuer&gt;https://www.***.com&lt;/saml:Issuer&gt;
+    &lt;samlp:Status&gt;
+      &lt;samlp:StatusCode
+        Value=&quot;urn:oasis:names:tc:SAML:2.0:status:Success&quot;/&gt;
+    &lt;/samlp:Status&gt;
+    &lt;saml:Assertion
+      xmlns:saml=&quot;urn:oasis:names:tc:SAML:2.0:assertion&quot;
+      ID=&quot;_82b251d1-4796-46d3-b903-c85c9ae49172&quot;
+      Version=&quot;2.0&quot;
+      IssueInstant=&quot;2019-01-01T01:00:00Z&quot;&gt;
+      &lt;saml:Issuer&gt;https://www.***.com&lt;/saml:Issuer&gt;
+      &lt;!-- a POSTed assertion MUST be signed --&gt;
+      &lt;ds:Signature     xmlns:ds=&quot;http://www.w3.org/2000/09/xmldsig#&quot;&gt;...&lt;/ds:Signature&gt;
+      &lt;saml:Subject&gt;
+        &lt;saml:NameID
+          Format=&quot;urn:oasis:names:tc:SAML:2.0:nameid-format:transient&quot;&gt;
+         YufuTestUser
+        &lt;/saml:NameID&gt;
+        &lt;saml:SubjectConfirmation
+          Method=&quot;urn:oasis:names:tc:SAML:2.0:cm:bearer&quot;&gt;
+          &lt;saml:SubjectConfirmationData
+            InResponseTo=&quot;_049917a6-1183-42fd-a190-1d2cbaf9b144&quot;
+            Recipient=&quot;https://sp.example.com/SAML2/SSO/POST&quot;
+            NotOnOrAfter=&quot;2019-01-01T01:00:00Z&quot;/&gt;
+        &lt;/saml:SubjectConfirmation&gt;
+      &lt;/saml:Subject&gt;
+      &lt;saml:Conditions
+        NotBefore=&quot;2019-01-01T00:55:00Z &quot;
+        NotOnOrAfter=&quot;2019-01-01T01:05:00Z &quot;&gt;
+        &lt;saml:AudienceRestriction&gt;
+        &lt;saml:Audience&gt;https://www.***.com&lt;/saml:Audience&gt;
+        &lt;/saml:AudienceRestriction&gt;
+      &lt;/saml:Conditions&gt;
+      &lt;saml:AuthnStatement
+        AuthnInstant=&quot;2020-01-01T00:00:00Z&quot;
+        SessionIndex=&quot;_82b251d1-4796-46d3-b903-c85c9ae49172&quot;&gt;
+        &lt;saml:AuthnContext&gt;
+          &lt;saml:AuthnContextClassRef&gt;        urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport
+         &lt;/saml:AuthnContextClassRef&gt;
+        &lt;/saml:AuthnContext&gt;
+      &lt;/saml:AuthnStatement&gt;
+    &lt;/saml:Assertion&gt;
+  &lt;/samlp:Response&gt;
+</code></pre><h2 id="OIDC-（OpenID-Connect）"><a href="#OIDC-（OpenID-Connect）" class="headerlink" title="OIDC （OpenID Connect）"></a>OIDC （OpenID Connect）</h2><blockquote>
+<p>一种基于OAuth2协议的身份认证标准协议</p>
+</blockquote>
+<blockquote>
+<p><strong>// TODO</strong></p>
+</blockquote>
+
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.png" alt="zekun 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="zekun 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OIDC/" rel="tag"># OIDC</a>
+          
+            <a href="/tags/SAML/" rel="tag"># SAML</a>
+          
+            <a href="/tags/SSO/" rel="tag"># SSO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/27/ldap_password_storage_scheme/" rel="next" title="浅谈 LDAP password storage scheme">
+                <i class="fa fa-chevron-left"></i> 浅谈 LDAP password storage scheme
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -335,6 +578,17 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
 
         </div>
         
@@ -355,8 +609,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -427,6 +690,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SAML-（Security-Assertion-Markup-Language）"><span class="nav-number">1.</span> <span class="nav-text">SAML （Security Assertion Markup Language）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SAML协议的简单流程"><span class="nav-number">1.1.</span> <span class="nav-text">SAML协议的简单流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAML-数据格式"><span class="nav-number">1.2.</span> <span class="nav-text">SAML 数据格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAMLRequest"><span class="nav-number">1.2.1.</span> <span class="nav-text">SAMLRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SAMLResponse-（SAML2-0）"><span class="nav-number">1.2.2.</span> <span class="nav-text">SAMLResponse （SAML2.0）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OIDC-（OpenID-Connect）"><span class="nav-number">2.</span> <span class="nav-text">OIDC （OpenID Connect）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -619,6 +898,30 @@
 
     
 
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'lethean-kun',
+            repo: 'lethean-kun.github.io',
+            
+            lang: "zh-CN" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '754aec48588029048f79798c2061b635aa654a24',
+            
+                client_id: 'e51c80ead99a15a60735'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
     
 
 
