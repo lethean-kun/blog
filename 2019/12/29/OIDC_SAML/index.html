@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="SAML （Security Assertion Markup Language） 一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准">
+<meta name="description" content="OIDC （OpenID Connect） 一种基于OAuth2协议的身份认证标准协议近期在实现OIDC SP Initiated， 之前有接触过实现一个OIDC Server，对 well-known 接口以及 authorization_endpoint、token_endpoint、userinfo_endpoint、jwks_uri 等接口的实现比较熟悉，定义了类似于SAML Metada">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OIDC、SAML主流SSO协议介绍">
 <meta property="og:url" content="http://zkun.top/2019/12/29/OIDC_SAML/index.html">
 <meta property="og:site_name" content="zk&#39;Blog">
-<meta property="og:description" content="SAML （Security Assertion Markup Language） 一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准">
+<meta property="og:description" content="OIDC （OpenID Connect） 一种基于OAuth2协议的身份认证标准协议近期在实现OIDC SP Initiated， 之前有接触过实现一个OIDC Server，对 well-known 接口以及 authorization_endpoint、token_endpoint、userinfo_endpoint、jwks_uri 等接口的实现比较熟悉，定义了类似于SAML Metada">
 <meta property="og:image" content="http://zkun.top/images/SAML.png">
 <meta property="article:published_time" content="2019-12-29T08:10:08.000Z">
-<meta property="article:modified_time" content="2019-12-29T10:46:19.253Z">
+<meta property="article:modified_time" content="2020-01-27T08:38:50.457Z">
 <meta property="article:author" content="zekun">
 <meta property="article:tag" content="OIDC">
 <meta property="article:tag" content="SAML">
@@ -387,11 +387,138 @@
       
 
       
-        <h2 id="SAML-（Security-Assertion-Markup-Language）"><a href="#SAML-（Security-Assertion-Markup-Language）" class="headerlink" title="SAML （Security Assertion Markup Language）"></a>SAML （Security Assertion Markup Language）</h2><blockquote>
-<p>一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议<br>自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准</p>
+        <h2 id="OIDC-（OpenID-Connect）"><a href="#OIDC-（OpenID-Connect）" class="headerlink" title="OIDC （OpenID Connect）"></a>OIDC （OpenID Connect）</h2><blockquote>
+<p>一种基于OAuth2协议的身份认证标准协议<br>近期在实现OIDC SP Initiated， 之前有接触过实现一个OIDC Server，对 well-known 接口以及 authorization_endpoint、token_endpoint、userinfo_endpoint、jwks_uri 等接口的实现比较熟悉，<br>定义了类似于SAML Metadata的Discovery接口（well-known接口）。所以在一个支持OIDC的SP的配置页面，通常要求配置OIDC服务端的well-known url 或者配置well-known 接口中 相关的 endpoint。</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>最终实现的场景是 —&gt; 我们的服务进行简单配置后 可以通过任何实现了OIDC Server 的第三方IDP登录。</p>
+</blockquote>
 </blockquote>
 <a id="more"></a> 
 
+
+<blockquote>
+<p>对于标准 OIDC 协议以及相关接口实现不太了解的同学移步 <a href="https://openid.net/specs/openid-connect-core-1_0.html#" target="_blank" rel="noopener">OpenId connect</a> </p>
+</blockquote>
+<h3 id="authorization-endpoint"><a href="#authorization-endpoint" class="headerlink" title="authorization_endpoint"></a>authorization_endpoint</h3><blockquote>
+<p>向 OIDC Server 发起 authorize 请求 </p>
+</blockquote>
+<pre><code>
+
+ Request 
+
+   GET /authorize?
+      response_type=id_token%20code
+      &amp;client_id=*
+      &amp;redirect_uri=https%3A%2F%2Fclient.example.org
+      &amp;scope=openid%20profile
+      &amp;state=*
+      &amp;nonce=n-0S6_WzA2Mj HTTP/1.1
+    Host: server.example.com
+
+    REQUIRED：response_type、redirect_uri
+
+ Response
+
+   HTTP/1.1 302 Found
+     Location: https://client.example.org?
+       code=*
+       &amp;state=af0ifjsldkj 
+</code></pre><ol>
+<li>Request</li>
+</ol>
+<ul>
+<li>response_type: code模式下 OIDC Server 认证完回调后 会带上一个可供一次性消费的code（通过 token_endpoint 获取 accessToken时 使用）</li>
+<li>scope: 获取的userInfo 以及 id_token 中会以此来返回你需要信息。以空格进行分隔，必须至少包含openid  </li>
+<li>redirect_uri: OIDC Server 会回调过来的地址 必须与OIDC Server 端，填写的保持一致</li>
+</ul>
+<ol start="2">
+<li>Response</li>
+</ol>
+<blockquote>
+<p>OIDC server 端接收到 authorize 请求后，认证通过会回跳到 Request 中的 redirect_uri 的地址 并携带上 response_type 中传的 code 或 id_token 以及 带上 request中的 state </p>
+</blockquote>
+<h3 id="token-endpoint"><a href="#token-endpoint" class="headerlink" title="token_endpoint"></a>token_endpoint</h3><blockquote>
+<p>获取 accessToken、id_token （authorization_code 授权码模式为例）</p>
+</blockquote>
+<pre><code>
+
+ Request 
+
+   POST /token HTTP/1.1
+     Host: server.example.com
+     Content-Type: application/x-www-form-urlencoded
+     Authorization: Basic ***
+     grant_type=authorization_code&amp;code=*&amp;redirect_uri=*
+
+ Response
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   Cache-Control: no-store
+   Pragma: no-cache
+
+   {
+    &quot;access_token&quot;: &quot;&quot;,
+    &quot;token_type&quot;: &quot;Bearer&quot;,
+    &quot;refresh_token&quot;: &quot;&quot;,
+    &quot;expires_in&quot;: 3600,
+    &quot;id_token&quot;: &quot;&quot;
+   }
+</code></pre><ol>
+<li>Request</li>
+</ol>
+<ul>
+<li>grant_type: 对于使用code 获取的形式 传值 authorization_code (其他形式 password 、refresh_token、implicit)</li>
+<li>code: authorize 请求中 获取到的code  </li>
+<li>redirect_uri: OIDC Server 会回调过来的地址 必须与OIDC Server 端，填写的保持一致</li>
+</ul>
+<ol start="2">
+<li>Response</li>
+</ol>
+<ul>
+<li>access_token: 可以通过userinfo_endpoint获取user信息</li>
+<li>token_type: 使用access_token 的 auth 方式</li>
+<li>expires_in: 有效期</li>
+<li>id_token: <strong>在使用 id_token 时，需要对 id_token 进行验签 此时会使用到 jwks_uri endpoint 来获取公钥</strong></li>
+</ul>
+<h3 id="userinfo-endpoint"><a href="#userinfo-endpoint" class="headerlink" title="userinfo_endpoint"></a>userinfo_endpoint</h3><blockquote>
+<p>获取用户详细信息</p>
+</blockquote>
+<pre><code>
+ Request 
+
+   GET /userinfo HTTP/1.1
+   Host: server.example.com
+   Authorization: Bearer accessToken
+
+
+ Response
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   {
+     &quot;sub&quot;: &quot;&quot;,
+     &quot;name&quot;: &quot;&quot;,
+     &quot;given_name&quot;: &quot;&quot;,
+     &quot;family_name&quot;: &quot;&quot;,
+     &quot;preferred_username&quot;: &quot;&quot;,
+     &quot;email&quot;: &quot;&quot;,
+     &quot;picture&quot;: &quot;&quot;
+   }
+</code></pre><h3 id="至此，我们已经可以完成实现的场景"><a href="#至此，我们已经可以完成实现的场景" class="headerlink" title="至此，我们已经可以完成实现的场景"></a>至此，我们已经可以完成实现的场景</h3><blockquote>
+<p>我们的服务进行简单配置后 可以通过任何实现了OIDC Server 的第三方IDP登录。</p>
+</blockquote>
+<ol>
+<li>第一步 我们向 OIDC server 发起 authorize 请求 </li>
+<li>OIDC server 接收到请求后 会 回跳到 传入redirect_uri，我们需要实现 redirect_uri 接口，用来处理我们server的逻辑</li>
+<li>通过 id_token 或者 userInfo JIT 创建（获取通过规则匹配到我们server下的用户）出来 我们server 下的用户</li>
+<li>实现 通过 第三方 OIDC server IDP 登录我们的系统</li>
+</ol>
+<h2 id="SAML-（Security-Assertion-Markup-Language）"><a href="#SAML-（Security-Assertion-Markup-Language）" class="headerlink" title="SAML （Security Assertion Markup Language）"></a>SAML （Security Assertion Markup Language）</h2><blockquote>
+<p>一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议<br>自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准</p>
+</blockquote>
 <h3 id="SAML协议的简单流程"><a href="#SAML协议的简单流程" class="headerlink" title="SAML协议的简单流程"></a>SAML协议的简单流程</h3><blockquote>
 <p>SAML中主要定义了三个角色 <strong>identity provider</strong>(简称 <strong>IDP</strong>)、<strong>service provider(简称 **SP</strong>)<strong>、</strong>principal**(可以认为是使用者)</p>
 </blockquote>
@@ -473,13 +600,7 @@
       &lt;/saml:AuthnStatement&gt;
     &lt;/saml:Assertion&gt;
   &lt;/samlp:Response&gt;
-</code></pre><h2 id="OIDC-（OpenID-Connect）"><a href="#OIDC-（OpenID-Connect）" class="headerlink" title="OIDC （OpenID Connect）"></a>OIDC （OpenID Connect）</h2><blockquote>
-<p>一种基于OAuth2协议的身份认证标准协议</p>
-</blockquote>
-<blockquote>
-<p><strong>// TODO</strong></p>
-</blockquote>
-
+</code></pre>
       
     </div>
     
@@ -551,6 +672,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/06/oh_my_zsh/" rel="prev" title="Oh My Zsh 使用">
+                Oh My Zsh 使用 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -638,7 +763,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -651,7 +776,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -700,7 +825,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SAML-（Security-Assertion-Markup-Language）"><span class="nav-number">1.</span> <span class="nav-text">SAML （Security Assertion Markup Language）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SAML协议的简单流程"><span class="nav-number">1.1.</span> <span class="nav-text">SAML协议的简单流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAML-数据格式"><span class="nav-number">1.2.</span> <span class="nav-text">SAML 数据格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAMLRequest"><span class="nav-number">1.2.1.</span> <span class="nav-text">SAMLRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SAMLResponse-（SAML2-0）"><span class="nav-number">1.2.2.</span> <span class="nav-text">SAMLResponse （SAML2.0）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OIDC-（OpenID-Connect）"><span class="nav-number">2.</span> <span class="nav-text">OIDC （OpenID Connect）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OIDC-（OpenID-Connect）"><span class="nav-number">1.</span> <span class="nav-text">OIDC （OpenID Connect）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#authorization-endpoint"><span class="nav-number">1.1.</span> <span class="nav-text">authorization_endpoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#token-endpoint"><span class="nav-number">1.2.</span> <span class="nav-text">token_endpoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#userinfo-endpoint"><span class="nav-number">1.3.</span> <span class="nav-text">userinfo_endpoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#至此，我们已经可以完成实现的场景"><span class="nav-number">1.4.</span> <span class="nav-text">至此，我们已经可以完成实现的场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SAML-（Security-Assertion-Markup-Language）"><span class="nav-number">2.</span> <span class="nav-text">SAML （Security Assertion Markup Language）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SAML协议的简单流程"><span class="nav-number">2.1.</span> <span class="nav-text">SAML协议的简单流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAML-数据格式"><span class="nav-number">2.2.</span> <span class="nav-text">SAML 数据格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SAMLRequest"><span class="nav-number">2.2.1.</span> <span class="nav-text">SAMLRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SAMLResponse-（SAML2-0）"><span class="nav-number">2.2.2.</span> <span class="nav-text">SAMLResponse （SAML2.0）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -720,7 +845,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

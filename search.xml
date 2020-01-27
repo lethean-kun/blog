@@ -1,13 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Oh My Zsh 使用</title>
+    <url>/2020/01/06/oh_my_zsh/</url>
+    <content><![CDATA[<h2 id="Oh-My-Zsh"><a href="#Oh-My-Zsh" class="headerlink" title="Oh My Zsh"></a>Oh My Zsh</h2><blockquote>
+<p>shell的类型有很多种，mac、linux下默认的是bash，bash的提示功能不够强大，界面也不够炫；而zsh 本体有着强大的功能，但碍于其复杂的配置，对普通用户而言并不太适合。 <strong>Oh My Zsh</strong> 的出现打破了这一局面，你只需要进行极为简单的安装配置，就可以用上 Zsh。</p>
+</blockquote>
+<a id="more"></a> 
+<h2 id="安装-Oh-My-Zsh"><a href="#安装-Oh-My-Zsh" class="headerlink" title="安装 Oh My Zsh"></a>安装 Oh My Zsh</h2><h3 id="mac安装"><a href="#mac安装" class="headerlink" title="mac安装"></a>mac安装</h3><blockquote>
+<p>因为 macOS Mojave 已经自带了 Zsh，所以可以直接安装 Oh My Zsh。执行一行命令。</p>
+</blockquote>
+<pre class=" language-$xslt"><code class="language-$xslt"></code></pre>
+<pre><code>sh -c &quot;$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;
+</code></pre><blockquote>
+<p>在安装过程中会提示 Do you want to change your default shell to zsh? [Y/n]（是否将默认 Shell 切换到 Zsh），按下 Y 并回车即可。当你看见大大的 Oh my zsh 标志时就表示 Oh My Zsh 已经安装成功了。</p>
+</blockquote>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><blockquote>
+<p>安装完成后 会生成 .zshrc 文件，编辑 .zshrc 文件</p>
+</blockquote>
+<pre><code>vim ~/.zshrc
+</code></pre><blockquote>
+<p>里面有详细的注释解释 这里就不赘述了。编辑完成后。执行命令（reload config）</p>
+</blockquote>
+<pre><code>source ~/.zshrc</code></pre><h2 id="idea使用zsh终端"><a href="#idea使用zsh终端" class="headerlink" title="idea使用zsh终端"></a>idea使用zsh终端</h2><p><img src="/images/ideazsh.png" alt=""></p>
+<h2 id="bash-切换到-zsh-环境变量丢失问题"><a href="#bash-切换到-zsh-环境变量丢失问题" class="headerlink" title="bash 切换到 zsh 环境变量丢失问题"></a>bash 切换到 zsh 环境变量丢失问题</h2><ol>
+<li><p>在bash下面执行:</p>
+<pre><code>echo $PATH</code></pre><blockquote>
+<p>查看系统路径，复制路径。</p>
+</blockquote>
+</li>
+<li><p>然后切换到zsh</p>
+<pre><code>sudo vim ~/.zshrc</code></pre></li>
+</ol>
+<blockquote>
+<p>在 If you come from bash you might have to change your $PATH.下面添加刚才的路径:</p>
+</blockquote>
+<pre><code>export PATH=&quot; you path copy just now &quot;</code></pre><ol start="3">
+<li>保存文件，在zsh下执行:<pre><code>source ~/.zshrc</code></pre></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>shell</tag>
+        <tag>zsh</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OIDC、SAML主流SSO协议介绍</title>
     <url>/2019/12/29/OIDC_SAML/</url>
-    <content><![CDATA[<h2 id="SAML-（Security-Assertion-Markup-Language）"><a href="#SAML-（Security-Assertion-Markup-Language）" class="headerlink" title="SAML （Security Assertion Markup Language）"></a>SAML （Security Assertion Markup Language）</h2><blockquote>
-<p>一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议<br>自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准</p>
+    <content><![CDATA[<h2 id="OIDC-（OpenID-Connect）"><a href="#OIDC-（OpenID-Connect）" class="headerlink" title="OIDC （OpenID Connect）"></a>OIDC （OpenID Connect）</h2><blockquote>
+<p>一种基于OAuth2协议的身份认证标准协议<br>近期在实现OIDC SP Initiated， 之前有接触过实现一个OIDC Server，对 well-known 接口以及 authorization_endpoint、token_endpoint、userinfo_endpoint、jwks_uri 等接口的实现比较熟悉，<br>定义了类似于SAML Metadata的Discovery接口（well-known接口）。所以在一个支持OIDC的SP的配置页面，通常要求配置OIDC服务端的well-known url 或者配置well-known 接口中 相关的 endpoint。</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>最终实现的场景是 —&gt; 我们的服务进行简单配置后 可以通过任何实现了OIDC Server 的第三方IDP登录。</p>
+</blockquote>
 </blockquote>
 <a id="more"></a> 
 
+
+<blockquote>
+<p>对于标准 OIDC 协议以及相关接口实现不太了解的同学移步 <a href="https://openid.net/specs/openid-connect-core-1_0.html#" target="_blank" rel="noopener">OpenId connect</a> </p>
+</blockquote>
+<h3 id="authorization-endpoint"><a href="#authorization-endpoint" class="headerlink" title="authorization_endpoint"></a>authorization_endpoint</h3><blockquote>
+<p>向 OIDC Server 发起 authorize 请求 </p>
+</blockquote>
+<pre><code>
+
+ Request 
+
+   GET /authorize?
+      response_type=id_token%20code
+      &amp;client_id=*
+      &amp;redirect_uri=https%3A%2F%2Fclient.example.org
+      &amp;scope=openid%20profile
+      &amp;state=*
+      &amp;nonce=n-0S6_WzA2Mj HTTP/1.1
+    Host: server.example.com
+
+    REQUIRED：response_type、redirect_uri
+
+ Response
+
+   HTTP/1.1 302 Found
+     Location: https://client.example.org?
+       code=*
+       &amp;state=af0ifjsldkj 
+</code></pre><ol>
+<li>Request</li>
+</ol>
+<ul>
+<li>response_type: code模式下 OIDC Server 认证完回调后 会带上一个可供一次性消费的code（通过 token_endpoint 获取 accessToken时 使用）</li>
+<li>scope: 获取的userInfo 以及 id_token 中会以此来返回你需要信息。以空格进行分隔，必须至少包含openid  </li>
+<li>redirect_uri: OIDC Server 会回调过来的地址 必须与OIDC Server 端，填写的保持一致</li>
+</ul>
+<ol start="2">
+<li>Response</li>
+</ol>
+<blockquote>
+<p>OIDC server 端接收到 authorize 请求后，认证通过会回跳到 Request 中的 redirect_uri 的地址 并携带上 response_type 中传的 code 或 id_token 以及 带上 request中的 state </p>
+</blockquote>
+<h3 id="token-endpoint"><a href="#token-endpoint" class="headerlink" title="token_endpoint"></a>token_endpoint</h3><blockquote>
+<p>获取 accessToken、id_token （authorization_code 授权码模式为例）</p>
+</blockquote>
+<pre><code>
+
+ Request 
+
+   POST /token HTTP/1.1
+     Host: server.example.com
+     Content-Type: application/x-www-form-urlencoded
+     Authorization: Basic ***
+     grant_type=authorization_code&amp;code=*&amp;redirect_uri=*
+
+ Response
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   Cache-Control: no-store
+   Pragma: no-cache
+
+   {
+    &quot;access_token&quot;: &quot;&quot;,
+    &quot;token_type&quot;: &quot;Bearer&quot;,
+    &quot;refresh_token&quot;: &quot;&quot;,
+    &quot;expires_in&quot;: 3600,
+    &quot;id_token&quot;: &quot;&quot;
+   }
+</code></pre><ol>
+<li>Request</li>
+</ol>
+<ul>
+<li>grant_type: 对于使用code 获取的形式 传值 authorization_code (其他形式 password 、refresh_token、implicit)</li>
+<li>code: authorize 请求中 获取到的code  </li>
+<li>redirect_uri: OIDC Server 会回调过来的地址 必须与OIDC Server 端，填写的保持一致</li>
+</ul>
+<ol start="2">
+<li>Response</li>
+</ol>
+<ul>
+<li>access_token: 可以通过userinfo_endpoint获取user信息</li>
+<li>token_type: 使用access_token 的 auth 方式</li>
+<li>expires_in: 有效期</li>
+<li>id_token: <strong>在使用 id_token 时，需要对 id_token 进行验签 此时会使用到 jwks_uri endpoint 来获取公钥</strong></li>
+</ul>
+<h3 id="userinfo-endpoint"><a href="#userinfo-endpoint" class="headerlink" title="userinfo_endpoint"></a>userinfo_endpoint</h3><blockquote>
+<p>获取用户详细信息</p>
+</blockquote>
+<pre><code>
+ Request 
+
+   GET /userinfo HTTP/1.1
+   Host: server.example.com
+   Authorization: Bearer accessToken
+
+
+ Response
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   {
+     &quot;sub&quot;: &quot;&quot;,
+     &quot;name&quot;: &quot;&quot;,
+     &quot;given_name&quot;: &quot;&quot;,
+     &quot;family_name&quot;: &quot;&quot;,
+     &quot;preferred_username&quot;: &quot;&quot;,
+     &quot;email&quot;: &quot;&quot;,
+     &quot;picture&quot;: &quot;&quot;
+   }
+</code></pre><h3 id="至此，我们已经可以完成实现的场景"><a href="#至此，我们已经可以完成实现的场景" class="headerlink" title="至此，我们已经可以完成实现的场景"></a>至此，我们已经可以完成实现的场景</h3><blockquote>
+<p>我们的服务进行简单配置后 可以通过任何实现了OIDC Server 的第三方IDP登录。</p>
+</blockquote>
+<ol>
+<li>第一步 我们向 OIDC server 发起 authorize 请求 </li>
+<li>OIDC server 接收到请求后 会 回跳到 传入redirect_uri，我们需要实现 redirect_uri 接口，用来处理我们server的逻辑</li>
+<li>通过 id_token 或者 userInfo JIT 创建（获取通过规则匹配到我们server下的用户）出来 我们server 下的用户</li>
+<li>实现 通过 第三方 OIDC server IDP 登录我们的系统</li>
+</ol>
+<h2 id="SAML-（Security-Assertion-Markup-Language）"><a href="#SAML-（Security-Assertion-Markup-Language）" class="headerlink" title="SAML （Security Assertion Markup Language）"></a>SAML （Security Assertion Markup Language）</h2><blockquote>
+<p>一种基于基于XML的标准数据格式，同时也可以认为是一种基于XML的协议<br>自2002年11月SAML1.0被OASIS采纳为OASIS标准后，SAML又进行了两次版本升级。SAML1.1在2003年9月被批准为OASIS标准，SAML2.0在2005年3月被批准为OASIS标准</p>
+</blockquote>
 <h3 id="SAML协议的简单流程"><a href="#SAML协议的简单流程" class="headerlink" title="SAML协议的简单流程"></a>SAML协议的简单流程</h3><blockquote>
 <p>SAML中主要定义了三个角色 <strong>identity provider</strong>(简称 <strong>IDP</strong>)、<strong>service provider(简称 **SP</strong>)<strong>、</strong>principal**(可以认为是使用者)</p>
 </blockquote>
@@ -89,13 +260,7 @@
       &lt;/saml:AuthnStatement&gt;
     &lt;/saml:Assertion&gt;
   &lt;/samlp:Response&gt;
-</code></pre><h2 id="OIDC-（OpenID-Connect）"><a href="#OIDC-（OpenID-Connect）" class="headerlink" title="OIDC （OpenID Connect）"></a>OIDC （OpenID Connect）</h2><blockquote>
-<p>一种基于OAuth2协议的身份认证标准协议</p>
-</blockquote>
-<blockquote>
-<p><strong>// TODO</strong></p>
-</blockquote>
-]]></content>
+</code></pre>]]></content>
       <tags>
         <tag>OIDC</tag>
         <tag>SAML</tag>
