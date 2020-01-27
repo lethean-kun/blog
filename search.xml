@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>做通知系统遇到的坑</title>
+    <url>/2020/01/26/notification_system/</url>
+    <content><![CDATA[<p><strong>todo</strong></p>
+]]></content>
+      <tags>
+        <tag>notification</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Oh My Zsh 使用</title>
     <url>/2020/01/26/oh_my_zsh/</url>
     <content><![CDATA[<h2 id="Oh-My-Zsh"><a href="#Oh-My-Zsh" class="headerlink" title="Oh My Zsh"></a>Oh My Zsh</h2><blockquote>
@@ -42,15 +51,6 @@
       <tags>
         <tag>shell</tag>
         <tag>zsh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>做通知系统遇到的坑</title>
-    <url>/2020/01/06/notification_system/</url>
-    <content><![CDATA[<p><strong>todo</strong></p>
-]]></content>
-      <tags>
-        <tag>notification</tag>
       </tags>
   </entry>
   <entry>
