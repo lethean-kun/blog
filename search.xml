@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Oh My Zsh 使用</title>
-    <url>/2020/01/06/oh_my_zsh/</url>
+    <url>/2020/01/26/oh_my_zsh/</url>
     <content><![CDATA[<h2 id="Oh-My-Zsh"><a href="#Oh-My-Zsh" class="headerlink" title="Oh My Zsh"></a>Oh My Zsh</h2><blockquote>
 <p>shell的类型有很多种，mac、linux下默认的是bash，bash的提示功能不够强大，界面也不够炫；而zsh 本体有着强大的功能，但碍于其复杂的配置，对普通用户而言并不太适合。 <strong>Oh My Zsh</strong> 的出现打破了这一局面，你只需要进行极为简单的安装配置，就可以用上 Zsh。</p>
 </blockquote>
@@ -42,6 +42,15 @@
       <tags>
         <tag>shell</tag>
         <tag>zsh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>做通知系统遇到的坑</title>
+    <url>/2020/01/06/notification_system/</url>
+    <content><![CDATA[<p><strong>todo</strong></p>
+]]></content>
+      <tags>
+        <tag>notification</tag>
       </tags>
   </entry>
   <entry>
@@ -298,8 +307,8 @@
 <pre><code>{SSHA256}+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==
 </code></pre>]]></content>
       <tags>
-        <tag>password</tag>
         <tag>LDAP</tag>
+        <tag>password</tag>
       </tags>
   </entry>
   <entry>
@@ -338,8 +347,8 @@
 </blockquote>
 ]]></content>
       <tags>
-        <tag>Hash</tag>
         <tag>password</tag>
+        <tag>Hash</tag>
       </tags>
   </entry>
 </search>
