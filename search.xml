@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>关于postgresql jsonb 字段索引</title>
+    <url>/2020/07/21/pg_jsonb_indexing/</url>
+    <content><![CDATA[<h2 id="关于postgresql-中的Jsonb-字段索引"><a href="#关于postgresql-中的Jsonb-字段索引" class="headerlink" title="关于postgresql 中的Jsonb 字段索引"></a>关于postgresql 中的Jsonb 字段索引</h2><blockquote>
+<p>在工作中遇到需要根据Jsonb字段中的数据 进行检索，就研究了一下关于postgresql Jsonb如何创建 以及使用索引</p>
+</blockquote>
+<a id="more"></a> 
+<h2 id="Jsonb字段创建索引的几种方式"><a href="#Jsonb字段创建索引的几种方式" class="headerlink" title="Jsonb字段创建索引的几种方式"></a>Jsonb字段创建索引的几种方式</h2><ul>
+<li>假设jsonb字段 values 数据为 </li>
+</ul>
+<pre><code>{
+    &quot;mobile&quot;:&quot;15512345681&quot;,
+    &quot;name&quot;:&quot;Eric&quot;,
+    &quot;email&quot;:&quot;eric@test.com&quot;
+}</code></pre><h3 id="default-GIN-jsonb-ops"><a href="#default-GIN-jsonb-ops" class="headerlink" title="default GIN (jsonb_ops)"></a>default GIN (jsonb_ops)</h3><blockquote>
+<p>default GIN index 支持的操作符  ?, ?&amp; , ?|, @&gt;</p>
+</blockquote>
+<blockquote>
+<p>但是请注意，这样的索引将在jdoc列中存储每个键和值的副本，假设只用到Jsonb中的一小部分字段的索引 建议使用 expression indexes</p>
+</blockquote>
+<pre><code>CREATE INDEX user_values_index ON &quot;user&quot; USING gin (values);
+</code></pre><blockquote>
+<p>例如下面的查询会用索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;user&quot;
+WHERE values @&gt; &#39;{&quot;mobile&quot; :&quot;15512345681&quot;}&#39;</code></pre><blockquote>
+<p>这样的查询不会用到索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;user&quot;
+WHERE values -&gt; &#39;mobile&#39; = &#39;15512345681&#39;
+</code></pre><h3 id="non-default-GIN-jsonb-path-ops"><a href="#non-default-GIN-jsonb-path-ops" class="headerlink" title="non-default GIN (jsonb_path_ops)"></a>non-default GIN (jsonb_path_ops)</h3><blockquote>
+<p>non-default GIN 仅支持的操作符  @&gt; 但与默认的运算符类jsonb_ops相比，它具有明显的性能优势(A jsonb_path_ops index is usually much smaller than a jsonb_ops index over the same data, and the specificity of searches is better)</p>
+</blockquote>
+<pre><code>CREATE INDEX user_values_index ON &quot;user&quot; USING gin (values jsonb_path_ops);
+</code></pre><blockquote>
+<p>仅 @&gt; 查询会用索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;user&quot;
+WHERE values @&gt; &#39;{&quot;mobile&quot; :&quot;15512345681&quot;}&#39;</code></pre><h3 id="expression-indexes"><a href="#expression-indexes" class="headerlink" title="expression indexes"></a>expression indexes</h3><blockquote>
+<p>假设Jsonb中 只会用到 单一的检索，建议只给用到检索的字段增加表达式索引</p>
+</blockquote>
+<pre><code>CREATE INDEX user_values_mobile_index ON user USING gin ((values -&gt; &#39;mobile&#39;));
+</code></pre><blockquote>
+<p>仅 values -&gt; ‘phoneNum’ 查询会用索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;Object&quot;
+WHERE values -&gt; &#39;phoneNum&#39; = &#39;15563866317&#39;</code></pre><h2 id="更多关于PG-Jsonb"><a href="#更多关于PG-Jsonb" class="headerlink" title="更多关于PG Jsonb"></a>更多关于PG Jsonb</h2><ul>
+<li>PG_datatype:<a href="https://www.postgresql.org/docs/9.6/datatype-json.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/9.6/datatype-json.html</a></li>
+<li>Indexes on Expressions:<a href="https://www.postgresql.org/docs/9.6/indexes-expressional.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/9.6/indexes-expressional.html</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>index</tag>
+        <tag>postgresql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>做通知系统遇到的坑</title>
     <url>/2020/01/26/notification_system/</url>
     <content><![CDATA[<p><strong>todo</strong></p>

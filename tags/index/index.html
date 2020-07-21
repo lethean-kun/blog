@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="LDAP,password," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,21 +79,14 @@
 
 
 
-<meta name="description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="浅谈 LDAP password storage scheme">
-<meta property="og:url" content="http://zkun.top/2019/12/27/ldap_password_storage_scheme/index.html">
+<meta name="description" content="冰冻三尺，非一日之寒">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zk&#39;Blog">
+<meta property="og:url" content="http://zkun.top/tags/index/index.html">
 <meta property="og:site_name" content="zk&#39;Blog">
-<meta property="og:description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。">
-<meta property="og:image" content="http://zkun.top/images/ldap_password.png">
-<meta property="og:image" content="http://zkun.top/images/sha-256_result.png">
-<meta property="article:published_time" content="2019-12-27T06:50:08.000Z">
-<meta property="article:modified_time" content="2019-12-28T06:05:12.956Z">
+<meta property="og:description" content="冰冻三尺，非一日之寒">
 <meta property="article:author" content="zekun">
-<meta property="article:tag" content="LDAP">
-<meta property="article:tag" content="password">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://zkun.top/images/ldap_password.png">
 
 
 
@@ -123,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://zkun.top/2019/12/27/ldap_password_storage_scheme/"/>
+  <link rel="canonical" href="http://zkun.top/tags/index/"/>
 
 
 
 
 
-  <title>浅谈 LDAP password storage scheme | zk'Blog</title>
+  <title>标签: index | zk'Blog</title>
   
 
 
@@ -158,7 +151,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -296,217 +289,54 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>index<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zkun.top/2019/12/27/ldap_password_storage_scheme/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zekun">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zk'Blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">浅谈 LDAP password storage scheme</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2020/07/21/pg_jsonb_indexing/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">关于postgresql jsonb 字段索引</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-27T14:50:08+08:00">
-                2019-12-27
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/12/27/ldap_password_storage_scheme/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/12/27/ldap_password_storage_scheme/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="LDAP-密码存储格式"><a href="#LDAP-密码存储格式" class="headerlink" title="LDAP 密码存储格式"></a>LDAP 密码存储格式</h2><p><img src="/images/ldap_password.png" alt=""></p>
-<blockquote>
-<p>如图为一个密码为password的密码，在LDAP中的存储 Password Preview。</p>
-</blockquote>
-<a id="more"></a> 
-
-
-<h2 id="LDAP-密码加密过程"><a href="#LDAP-密码加密过程" class="headerlink" title="LDAP 密码加密过程"></a>LDAP 密码加密过程</h2><blockquote>
-<p>图中所示的加密方式为 SSHA-256加密方式 （即SHA-256 带Salt方式）</p>
-</blockquote>
-<h3 id="加密过程解读"><a href="#加密过程解读" class="headerlink" title="加密过程解读"></a>加密过程解读</h3><ul>
-<li><a href="https://www.browserling.com/tools/text-to-hex" target="_blank" rel="noopener">password -&gt; Hex</a> 得到 <pre><code>70 61 73 73 77 6f 72 64</code></pre></li>
-<li>password Hex(70 61 73 73 77 6f 72 64) + Salt Hex(a3 17 fc 05 16 f8 2c 4d) <pre><code>70 61 73 73 77 6f 72 64 a3 17 fc 05 16 f8 2c 4d</code></pre></li>
-<li><a href="https://www.fileformat.info/tool/hash.htm?hex=70617373776f7264a317fc0516f82c4d" target="_blank" rel="noopener">Binary hash</a></li>
-</ul>
-<p><img src="/images/sha-256_result.png" alt=""></p>
-<ul>
-<li>如图 得到 SHA-256 哈希结果为</li>
-</ul>
-<pre><code>f818a581e113b53d96a8308ae43e572329dc09b8f883afbdc60d3aaebdc0def7</code></pre><ul>
-<li>密码哈希值 + Salt Hex —<a href="https://base64.guru/converter/encode/hex" target="_blank" rel="noopener">Base64</a>—&gt;</li>
-</ul>
-<pre><code>+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==</code></pre><ul>
-<li>最终Ldap的密码存储方式为 {CRYPT}Base64(Password Hex + Salt Hex)</li>
-</ul>
-<pre><code>{SSHA256}+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==
-</code></pre>
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechat.png" alt="zekun 微信支付"/>
-        <p>微信支付</p>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-07-21T17:07:20+08:00"
+              content="2020-07-21" >
+          07-21
+        </time>
       </div>
-    
 
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="zekun 支付宝"/>
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/LDAP/" rel="tag"># LDAP</a>
-          
-            <a href="/tags/password/" rel="tag"># password</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/12/26/password_stored_and_hash/" rel="next" title="Hash算法与密码存储">
-                <i class="fa fa-chevron-left"></i> Hash算法与密码存储
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/12/29/OIDC_SAML/" rel="prev" title="OIDC、SAML主流SSO协议介绍">
-                OIDC、SAML主流SSO协议介绍 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -514,17 +344,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
-    </div>
-
-  
-
-
 
         </div>
         
@@ -545,17 +364,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -626,22 +436,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDAP-密码存储格式"><span class="nav-number">1.</span> <span class="nav-text">LDAP 密码存储格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDAP-密码加密过程"><span class="nav-number">2.</span> <span class="nav-text">LDAP 密码加密过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加密过程解读"><span class="nav-number">2.1.</span> <span class="nav-text">加密过程解读</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -784,10 +578,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
@@ -834,30 +624,6 @@
 
     
 
-    
-      <script type="text/javascript">
-      function renderGitment(){
-        var gitment = new Gitmint({
-            id: window.location.pathname, 
-            owner: 'lethean-kun',
-            repo: 'lethean-kun.github.io',
-            
-            lang: "zh-CN" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-            
-            oauth: {
-            
-            
-                client_secret: '754aec48588029048f79798c2061b635aa654a24',
-            
-                client_id: 'e51c80ead99a15a60735'
-            }});
-        gitment.render('gitment-container');
-      }
-
-      
-      renderGitment();
-      
-      </script>
     
 
 

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="LDAP,password," />
+  <meta name="keywords" content="index,postgresql," />
 
 
 
@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。">
+<meta name="description" content="关于postgresql 中的Jsonb 字段索引 在工作中遇到需要根据Jsonb字段中的数据 进行检索，就研究了一下关于postgresql Jsonb如何创建 以及使用索引">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈 LDAP password storage scheme">
-<meta property="og:url" content="http://zkun.top/2019/12/27/ldap_password_storage_scheme/index.html">
+<meta property="og:title" content="关于postgresql jsonb 字段索引">
+<meta property="og:url" content="http://zkun.top/2020/07/21/pg_jsonb_indexing/index.html">
 <meta property="og:site_name" content="zk&#39;Blog">
-<meta property="og:description" content="LDAP 密码存储格式  如图为一个密码为password的密码，在LDAP中的存储 Password Preview。">
-<meta property="og:image" content="http://zkun.top/images/ldap_password.png">
-<meta property="og:image" content="http://zkun.top/images/sha-256_result.png">
-<meta property="article:published_time" content="2019-12-27T06:50:08.000Z">
-<meta property="article:modified_time" content="2019-12-28T06:05:12.956Z">
+<meta property="og:description" content="关于postgresql 中的Jsonb 字段索引 在工作中遇到需要根据Jsonb字段中的数据 进行检索，就研究了一下关于postgresql Jsonb如何创建 以及使用索引">
+<meta property="article:published_time" content="2020-07-21T09:07:20.000Z">
+<meta property="article:modified_time" content="2020-07-21T09:37:42.369Z">
 <meta property="article:author" content="zekun">
-<meta property="article:tag" content="LDAP">
-<meta property="article:tag" content="password">
+<meta property="article:tag" content="index">
+<meta property="article:tag" content="postgresql">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://zkun.top/images/ldap_password.png">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://zkun.top/2019/12/27/ldap_password_storage_scheme/"/>
+  <link rel="canonical" href="http://zkun.top/2020/07/21/pg_jsonb_indexing/"/>
 
 
 
 
 
-  <title>浅谈 LDAP password storage scheme | zk'Blog</title>
+  <title>关于postgresql jsonb 字段索引 | zk'Blog</title>
   
 
 
@@ -310,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://zkun.top/2019/12/27/ldap_password_storage_scheme/">
+    <link itemprop="mainEntityOfPage" href="http://zkun.top/2020/07/21/pg_jsonb_indexing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zekun">
@@ -327,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浅谈 LDAP password storage scheme</h1>
+          <h1 class="post-title" itemprop="name headline">关于postgresql jsonb 字段索引</h1>
         
 
         <div class="post-meta">
@@ -339,8 +336,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-27T14:50:08+08:00">
-                2019-12-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-21T17:07:20+08:00">
+                2020-07-21
               </time>
             
 
@@ -358,8 +355,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/12/27/ldap_password_storage_scheme/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/12/27/ldap_password_storage_scheme/" itemprop="commentsCount"></span>
+                <a href="/2020/07/21/pg_jsonb_indexing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/07/21/pg_jsonb_indexing/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -387,33 +384,58 @@
       
 
       
-        <h2 id="LDAP-密码存储格式"><a href="#LDAP-密码存储格式" class="headerlink" title="LDAP 密码存储格式"></a>LDAP 密码存储格式</h2><p><img src="/images/ldap_password.png" alt=""></p>
-<blockquote>
-<p>如图为一个密码为password的密码，在LDAP中的存储 Password Preview。</p>
+        <h2 id="关于postgresql-中的Jsonb-字段索引"><a href="#关于postgresql-中的Jsonb-字段索引" class="headerlink" title="关于postgresql 中的Jsonb 字段索引"></a>关于postgresql 中的Jsonb 字段索引</h2><blockquote>
+<p>在工作中遇到需要根据Jsonb字段中的数据 进行检索，就研究了一下关于postgresql Jsonb如何创建 以及使用索引</p>
 </blockquote>
 <a id="more"></a> 
-
-
-<h2 id="LDAP-密码加密过程"><a href="#LDAP-密码加密过程" class="headerlink" title="LDAP 密码加密过程"></a>LDAP 密码加密过程</h2><blockquote>
-<p>图中所示的加密方式为 SSHA-256加密方式 （即SHA-256 带Salt方式）</p>
+<h2 id="Jsonb字段创建索引的几种方式"><a href="#Jsonb字段创建索引的几种方式" class="headerlink" title="Jsonb字段创建索引的几种方式"></a>Jsonb字段创建索引的几种方式</h2><ul>
+<li>假设jsonb字段 values 数据为 </li>
+</ul>
+<pre><code>{
+    &quot;mobile&quot;:&quot;15512345681&quot;,
+    &quot;name&quot;:&quot;Eric&quot;,
+    &quot;email&quot;:&quot;eric@test.com&quot;
+}</code></pre><h3 id="default-GIN-jsonb-ops"><a href="#default-GIN-jsonb-ops" class="headerlink" title="default GIN (jsonb_ops)"></a>default GIN (jsonb_ops)</h3><blockquote>
+<p>default GIN index 支持的操作符  ?, ?&amp; , ?|, @&gt;</p>
 </blockquote>
-<h3 id="加密过程解读"><a href="#加密过程解读" class="headerlink" title="加密过程解读"></a>加密过程解读</h3><ul>
-<li><a href="https://www.browserling.com/tools/text-to-hex" target="_blank" rel="noopener">password -&gt; Hex</a> 得到 <pre><code>70 61 73 73 77 6f 72 64</code></pre></li>
-<li>password Hex(70 61 73 73 77 6f 72 64) + Salt Hex(a3 17 fc 05 16 f8 2c 4d) <pre><code>70 61 73 73 77 6f 72 64 a3 17 fc 05 16 f8 2c 4d</code></pre></li>
-<li><a href="https://www.fileformat.info/tool/hash.htm?hex=70617373776f7264a317fc0516f82c4d" target="_blank" rel="noopener">Binary hash</a></li>
+<blockquote>
+<p>但是请注意，这样的索引将在jdoc列中存储每个键和值的副本，假设只用到Jsonb中的一小部分字段的索引 建议使用 expression indexes</p>
+</blockquote>
+<pre><code>CREATE INDEX user_values_index ON &quot;user&quot; USING gin (values);
+</code></pre><blockquote>
+<p>例如下面的查询会用索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;user&quot;
+WHERE values @&gt; &#39;{&quot;mobile&quot; :&quot;15512345681&quot;}&#39;</code></pre><blockquote>
+<p>这样的查询不会用到索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;user&quot;
+WHERE values -&gt; &#39;mobile&#39; = &#39;15512345681&#39;
+</code></pre><h3 id="non-default-GIN-jsonb-path-ops"><a href="#non-default-GIN-jsonb-path-ops" class="headerlink" title="non-default GIN (jsonb_path_ops)"></a>non-default GIN (jsonb_path_ops)</h3><blockquote>
+<p>non-default GIN 仅支持的操作符  @&gt; 但与默认的运算符类jsonb_ops相比，它具有明显的性能优势(A jsonb_path_ops index is usually much smaller than a jsonb_ops index over the same data, and the specificity of searches is better)</p>
+</blockquote>
+<pre><code>CREATE INDEX user_values_index ON &quot;user&quot; USING gin (values jsonb_path_ops);
+</code></pre><blockquote>
+<p>仅 @&gt; 查询会用索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;user&quot;
+WHERE values @&gt; &#39;{&quot;mobile&quot; :&quot;15512345681&quot;}&#39;</code></pre><h3 id="expression-indexes"><a href="#expression-indexes" class="headerlink" title="expression indexes"></a>expression indexes</h3><blockquote>
+<p>假设Jsonb中 只会用到 单一的检索，建议只给用到检索的字段增加表达式索引</p>
+</blockquote>
+<pre><code>CREATE INDEX user_values_mobile_index ON user USING gin ((values -&gt; &#39;mobile&#39;));
+</code></pre><blockquote>
+<p>仅 values -&gt; ‘phoneNum’ 查询会用索引</p>
+</blockquote>
+<pre><code>SELECT *
+FROM &quot;Object&quot;
+WHERE values -&gt; &#39;phoneNum&#39; = &#39;15563866317&#39;</code></pre><h2 id="更多关于PG-Jsonb"><a href="#更多关于PG-Jsonb" class="headerlink" title="更多关于PG Jsonb"></a>更多关于PG Jsonb</h2><ul>
+<li>PG_datatype:<a href="https://www.postgresql.org/docs/9.6/datatype-json.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/9.6/datatype-json.html</a></li>
+<li>Indexes on Expressions:<a href="https://www.postgresql.org/docs/9.6/indexes-expressional.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/9.6/indexes-expressional.html</a></li>
 </ul>
-<p><img src="/images/sha-256_result.png" alt=""></p>
-<ul>
-<li>如图 得到 SHA-256 哈希结果为</li>
-</ul>
-<pre><code>f818a581e113b53d96a8308ae43e572329dc09b8f883afbdc60d3aaebdc0def7</code></pre><ul>
-<li>密码哈希值 + Salt Hex —<a href="https://base64.guru/converter/encode/hex" target="_blank" rel="noopener">Base64</a>—&gt;</li>
-</ul>
-<pre><code>+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==</code></pre><ul>
-<li>最终Ldap的密码存储方式为 {CRYPT}Base64(Password Hex + Salt Hex)</li>
-</ul>
-<pre><code>{SSHA256}+BilgeETtT2WqDCK5D5XIyncCbj4g6+9xg06rr3A3vejF/wFFvgsTQ==
-</code></pre>
+
       
     </div>
     
@@ -459,9 +481,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LDAP/" rel="tag"># LDAP</a>
+            <a href="/tags/index/" rel="tag"># index</a>
           
-            <a href="/tags/password/" rel="tag"># password</a>
+            <a href="/tags/postgresql/" rel="tag"># postgresql</a>
           
         </div>
       
@@ -474,8 +496,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/26/password_stored_and_hash/" rel="next" title="Hash算法与密码存储">
-                <i class="fa fa-chevron-left"></i> Hash算法与密码存储
+              <a href="/2020/01/26/notification_system/" rel="next" title="做通知系统遇到的坑">
+                <i class="fa fa-chevron-left"></i> 做通知系统遇到的坑
               </a>
             
           </div>
@@ -483,10 +505,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/12/29/OIDC_SAML/" rel="prev" title="OIDC、SAML主流SSO协议介绍">
-                OIDC、SAML主流SSO协议介绍 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -636,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDAP-密码存储格式"><span class="nav-number">1.</span> <span class="nav-text">LDAP 密码存储格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDAP-密码加密过程"><span class="nav-number">2.</span> <span class="nav-text">LDAP 密码加密过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加密过程解读"><span class="nav-number">2.1.</span> <span class="nav-text">加密过程解读</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于postgresql-中的Jsonb-字段索引"><span class="nav-number">1.</span> <span class="nav-text">关于postgresql 中的Jsonb 字段索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jsonb字段创建索引的几种方式"><span class="nav-number">2.</span> <span class="nav-text">Jsonb字段创建索引的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#default-GIN-jsonb-ops"><span class="nav-number">2.1.</span> <span class="nav-text">default GIN (jsonb_ops)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#non-default-GIN-jsonb-path-ops"><span class="nav-number">2.2.</span> <span class="nav-text">non-default GIN (jsonb_path_ops)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#expression-indexes"><span class="nav-number">2.3.</span> <span class="nav-text">expression indexes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多关于PG-Jsonb"><span class="nav-number">3.</span> <span class="nav-text">更多关于PG Jsonb</span></a></li></ol></div>
             
 
           </div>
