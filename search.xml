@@ -50,7 +50,7 @@ WHERE values @&gt; &#39;{&quot;mobile&quot; :&quot;15512345681&quot;}&#39;</code
 </blockquote>
 <pre><code>SELECT *
 FROM &quot;user&quot;
-WHERE values -&gt; &#39;phoneNum&#39; = &#39;&quot;15563866317&quot;&#39;</code></pre><h2 id="更多关于PG-Jsonb"><a href="#更多关于PG-Jsonb" class="headerlink" title="更多关于PG Jsonb"></a>更多关于PG Jsonb</h2><ul>
+WHERE values -&gt; &#39;phoneNum&#39; = &#39;&quot;15563866317</code></pre><h2 id="更多关于PG-Jsonb"><a href="#更多关于PG-Jsonb" class="headerlink" title="更多关于PG Jsonb"></a>更多关于PG Jsonb</h2><ul>
 <li>PG_datatype:<a href="https://www.postgresql.org/docs/9.6/datatype-json.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/9.6/datatype-json.html</a></li>
 <li>Indexes on Expressions:<a href="https://www.postgresql.org/docs/9.6/indexes-expressional.html" target="_blank" rel="noopener">https://www.postgresql.org/docs/9.6/indexes-expressional.html</a></li>
 </ul>
